@@ -7,7 +7,6 @@
   "author": "[Tobias Lengsholz<tobias.lengsholz@invision.de>, Kai Brückers<kai.brueckers@invision.de>]",
   "license": "MIT",
   "dependencies": {
-    "@storybook/addon-knobs": "^5.3.18",
     "@types/react": "^16.9.19",
     "@types/styled-components": "5.0.1"
   },
@@ -17,6 +16,7 @@
     "@invisionag/prettier-config-ivx": "^2.0.1",
     "@rollup/plugin-typescript": "^3.0.0",
     "@storybook/addon-actions": "^5.3.18",
+    "@storybook/addon-knobs": "^5.3.18",
     "@storybook/addon-links": "^5.3.18",
     "@storybook/addons": "^5.3.18",
     "@storybook/preset-typescript": "^3.0.0",
