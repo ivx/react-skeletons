@@ -95,3 +95,11 @@ workflows:
       - build:
           requires:
             - install
+      - publish:
+          requires:
+            - test
+            - build
+          context: npm
+          filters:
+            branches:
+              only: master
