@@ -66,13 +66,8 @@ jobs:
           name: Build app
           command: yarn build-storybook
       - run:
-          name: Set git id
-          command: |
-            git config user.name ci
-            git config user.email ci@react-skeleton.com
-      - run:
           name: Deploy docs to gh-pages branch
-          command: yarn gh-pages --message "[skip ci] Updates" --dist storybook-static
+          command: yarn deploy-storybook --ci
   publish:
     <<: *defaults
     steps:
