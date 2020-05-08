@@ -54,6 +54,9 @@ jobs:
   publish:
     <<: *defaults
     steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "ab:9b:b8:60:57:d9:b9:87:e5:d9:5d:6e:ee:88:76:32"
       - checkout
       - restore_cache:
           name: Restore compiled package
