@@ -1,0 +1,97 @@
+version: 2.1
+defaults: &defaults
+  working_directory: ~/skeletons
+  docker:
+    - image: circleci/node:13.7.0
+jobs:
+  install:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install Dependencies
+          command: yarn install --frozen-lockfile
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/skeletons/node_modules
+            - ~/skeletons/.cache/yarn
+  test:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-{{ checksum "yarn.lock" }}
+      - run:
+          name: Run prettier
+          command: yarn lint
+      - run:
+          name: Run Jest tests
+          command: yarn jest
+  build:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-{{ checksum "yarn.lock" }}
+      - run:
+          name: Build app
+          command: yarn build
+      - save_cache:
+          name: Save compiled app
+          key: build-{{ .Revision }}
+          paths:
+            - ~/skeletons/dist
+  publish:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore compiled package
+          keys:
+            - build-{{ .Revision }}
+      - run:
+          name: Authenticate with registry
+          command: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
+      - run:
+          name: Bump version
+          command: |
+            git config user.name $CIRCLE_USERNAME
+            if [ "$(git tag -l --points-at HEAD)" ]; then
+              TAG="$(git describe --exact-match)"
+              echo "$TAG"
+              if [[ "$TAG" =~ ^v[0-9]+.[0-9]+.[0-9]+$ ]]; then
+                  echo "Tagged commit, publishing"
+                  npm publish --access public
+                else
+                  echo "Commit was tagged with non-semver tag, push new version"
+                  yarn version --patch
+                  git push origin master
+                  git push --tags
+              fi
+            else
+              echo "No tagged commit, push new version"
+              yarn version --patch
+              git push origin master
+              git push --tags
+            fi
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - install
+      - test:
+          requires:
+            - install
+      - build:
+          requires:
+            - install

@@ -1,0 +1,50 @@
+{
+  "name": "@invisionag/react-skeletons",
+  "version": "0.0.1",
+  "description": "Hook to streamline loading animations in React components",
+  "main": "dist/index.js",
+  "repository": "https://github.com/ivx/react-skeletons.git",
+  "author": "[Tobias Lengsholz<tobias.lengsholz@invision.de>, Kai Brückers<kai.brueckers@invision.de>]",
+  "license": "MIT",
+  "dependencies": {
+    "@types/react": "^16.9.19",
+    "@types/styled-components": "5.0.1"
+  },
+  "devDependencies": {
+    "@invisionag/jest-styled-components": "^7.0.1",
+    "@invisionag/prettier-config-ivx": "^2.0.1",
+    "@rollup/plugin-typescript": "^3.0.0",
+    "@testing-library/jest-dom": "^5.0.2",
+    "@testing-library/react": "^10.0.1",
+    "@types/jest": "^25.1.1",
+    "@types/node": "^12.12.31",
+    "jest": "^25.1.0",
+    "prettier": "^2.0.2",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "rollup": "^2.1.0",
+    "styled-components": "^5.0.1",
+    "ts-jest": "^25.1.0",
+    "tslib": "^1.9.3",
+    "typescript": "^3.2.2"
+  },
+  "peerDependencies": {
+    "react": ">=15.x.x",
+    "react-dom": ">=15.x.x",
+    "styled-components": ">=3.x.x"
+  },
+  "scripts": {
+    "build": "tsc --p . --emitDeclarationOnly && rollup -c",
+    "dev": "rollup -c -w",
+    "lint": "prettier --check '**/*.{js,ts,tsx,json,md}' --single-quote --trailing-comma all",
+    "format": "prettier --write '**/*.{js,ts,tsx,json,md}' --single-quote --trailing-comma all",
+    "test": "yarn lint && yarn jest"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "prettier": "@invisionag/prettier-config-ivx",
+  "files": [
+    "dist"
+  ]
+}
