@@ -51,12 +51,34 @@ jobs:
           key: build-{{ .Revision }}
           paths:
             - ~/skeletons/dist
+  storybook:
+    <<: *defaults
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - 'ab:9b:b8:60:57:d9:b9:87:e5:d9:5d:6e:ee:88:76:32'
+      - checkout
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-{{ checksum "yarn.lock" }}
+      - run:
+          name: Build app
+          command: yarn build-storybook
+      - run:
+          name: Set git id
+          command: |
+            git config user.name ci
+            git config user.email ci@react-skeleton.com
+      - run:
+          name: Deploy docs to gh-pages branch
+          command: gh-pages --message "[skip ci] Updates" --dist storybook-static
   publish:
     <<: *defaults
     steps:
       - add_ssh_keys:
           fingerprints:
-            - "ab:9b:b8:60:57:d9:b9:87:e5:d9:5d:6e:ee:88:76:32"
+            - 'ab:9b:b8:60:57:d9:b9:87:e5:d9:5d:6e:ee:88:76:32'
       - checkout
       - restore_cache:
           name: Restore compiled package
@@ -103,6 +125,13 @@ workflows:
             - test
             - build
           context: npm
+          filters:
+            branches:
+              only: master
+      - storybook:
+          requires:
+            - install
+          context: ghpages
           filters:
             branches:
               only: master
