@@ -72,7 +72,7 @@ jobs:
             git config user.email ci@react-skeleton.com
       - run:
           name: Deploy docs to gh-pages branch
-          command: gh-pages --message "[skip ci] Updates" --dist storybook-static
+          command: yarn gh-pages --message "[skip ci] Updates" --dist storybook-static
   publish:
     <<: *defaults
     steps:
