@@ -1,3 +1,6 @@
+[![ivx](https://circleci.com/gh/ivx/react-skeletons.svg?style=shield)](https://app.circleci.com/pipelines/github/ivx/react-skeletons)
+![npm](https://img.shields.io/npm/v/@invisionag/react-skeletons)
+![David](https://img.shields.io/david/ivx/react-skeletons)
 # react-skeletons
 
 A storybook is deployed under https://ivx.github.io/react-skeletons/
