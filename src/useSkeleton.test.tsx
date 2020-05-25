@@ -37,11 +37,9 @@ const TextWithoutSkeleton: React.FC<{ isLoading?: boolean }> = ({
   );
 };
 
-const ExamplePage: React.FC<{ isLoading?: boolean }> = ({
-  isLoading,
-  children,
-  ...rest
-}) => {
+const ExamplePage: React.FC<{
+  isLoading?: boolean | ((prevIsLoading: boolean) => boolean);
+}> = ({ isLoading, children, ...rest }) => {
   const { withSkeleton } = useSkeleton({ isLoading });
 
   return withSkeleton(<div {...rest}>{children}</div>);
@@ -168,5 +166,33 @@ describe('useSkeleton', () => {
 
       expect(getByText('Skeleton context value: false')).toBeInTheDocument();
     });
+  });
+
+  it('allows to extend "isLoading" by passing a fucntion', () => {
+    const ContextConsumer = () => {
+      const value = useContext<boolean>(SkeletonContext);
+
+      return <span>Skeleton context value: {value.toString()}</span>;
+    };
+
+    const { getByText, rerender } = render(
+      <ExamplePage isLoading={false}>
+        <ExamplePage isLoading={(prevIsLoading) => !prevIsLoading}>
+          <ContextConsumer />
+        </ExamplePage>
+      </ExamplePage>,
+    );
+
+    expect(getByText('Skeleton context value: true')).toBeInTheDocument();
+
+    rerender(
+      <ExamplePage isLoading={true}>
+        <ExamplePage isLoading={(prevIsLoading) => !prevIsLoading}>
+          <ContextConsumer />
+        </ExamplePage>
+      </ExamplePage>,
+    );
+
+    expect(getByText('Skeleton context value: false')).toBeInTheDocument();
   });
 });

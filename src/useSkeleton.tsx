@@ -3,8 +3,21 @@ import * as React from 'react';
 export const SkeletonContext = React.createContext<boolean>(false);
 
 export type Params = {
-  isLoading?: boolean;
+  isLoading?: boolean | ((prevIsLoading: boolean) => boolean);
   Skeleton?: React.ComponentType;
+};
+
+const getSkeletonState = (
+  isCurrentSkeleton:
+    | boolean
+    | ((prevIsLoading: boolean) => boolean)
+    | undefined,
+  isParentSkeleton: boolean,
+) => {
+  if (isCurrentSkeleton === undefined) return isParentSkeleton;
+  if (typeof isCurrentSkeleton === 'function')
+    return isCurrentSkeleton(isParentSkeleton);
+  return isCurrentSkeleton;
 };
 
 export const useSkeleton = ({
@@ -13,8 +26,7 @@ export const useSkeleton = ({
 }: Params) => {
   const isParentSkeleton = React.useContext(SkeletonContext);
 
-  const isSkeleton =
-    isCurrentSkeleton === undefined ? isParentSkeleton : isCurrentSkeleton;
+  const isSkeleton = getSkeletonState(isCurrentSkeleton, isParentSkeleton);
 
   const renderContent = React.useMemo(
     () => (tree: React.ReactNode) =>
