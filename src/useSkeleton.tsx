@@ -30,7 +30,13 @@ export const useSkeleton = ({
 
   const renderContent = React.useMemo(
     () => (tree: React.ReactNode) =>
-      isSkeleton && Skeleton ? <Skeleton /> : tree,
+      isSkeleton && Skeleton ? (
+        <SkeletonContext.Provider value={false}>
+          <Skeleton />
+        </SkeletonContext.Provider>
+      ) : (
+        tree
+      ),
     [isSkeleton, Skeleton],
   );
 
