@@ -1,6 +1,6 @@
 {
   "name": "@invisionag/react-skeletons",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "description": "Hook to streamline loading animations in React components",
   "main": "dist/index.js",
   "repository": "https://github.com/ivx/react-skeletons.git",
