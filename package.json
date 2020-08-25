@@ -7,7 +7,8 @@
   "author": "[Tobias Lengsholz<tobias.lengsholz@invision.de>, Kai Brückers<kai.brueckers@invision.de>]",
   "license": "MIT",
   "resolutions": {
-    "@types/react": "^16.9.47"
+    "@types/react": "^16.9.47",
+    "prismjs": "^1.21.0"
   },
   "dependencies": {
     "@types/react": "^16.9.47",
