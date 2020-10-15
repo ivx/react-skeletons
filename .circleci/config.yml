@@ -2,7 +2,7 @@ version: 2.1
 defaults: &defaults
   working_directory: ~/skeletons
   docker:
-    - image: circleci/node:14.11.0
+    - image: circleci/node:current
 jobs:
   install:
     <<: *defaults
