@@ -18,7 +18,7 @@
     "@babel/core": "^7.12.9",
     "@invisionag/jest-styled-components": "^7.0.1",
     "@invisionag/prettier-config-ivx": "^2.0.13",
-    "@rollup/plugin-typescript": "^6.0.0",
+    "@rollup/plugin-typescript": "^8.0.0",
     "@storybook/addon-actions": "^6.1.9",
     "@storybook/addon-knobs": "^6.1.9",
     "@storybook/addon-links": "^6.1.9",
