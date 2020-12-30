@@ -1605,10 +1605,10 @@
   dependencies:
     css "^2.2.4"
 
-"@invisionag/prettier-config-ivx@^2.0.13":
-  version "2.0.13"
-  resolved "https://registry.yarnpkg.com/@invisionag/prettier-config-ivx/-/prettier-config-ivx-2.0.13.tgz#7ecc3436e146d43afeb5d2e315d9e4054e5f4e6a"
-  integrity sha512-hon3HyHISqgHpI/iLrU0aFChMCTjEV3jJf3nKVNiE7tJhXOEh/zwMOrWO5IjEdYem8zZBnvEEQosDVLY7r19AA==
+"@invisionag/prettier-config-ivx@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@invisionag/prettier-config-ivx/-/prettier-config-ivx-2.1.0.tgz#a5760d8aa993187dd5ae081ec51fa53c33e3b9dc"
+  integrity sha512-vXJCNoVERx7pnslh5DWchmTyUDv9By8v5/NjlNRYwJ9iZZDV+CMJ8nrNOw05qfYMAv/aRsWZDOaIr7bWfzXg3Q==
 
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.0.0"
@@ -1864,10 +1864,10 @@
     prop-types "^15.6.1"
     react-lifecycles-compat "^3.0.4"
 
-"@rollup/plugin-typescript@^8.0.0":
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/@rollup/plugin-typescript/-/plugin-typescript-8.0.0.tgz#d621d9e268ef591c9e439650f550c5ffc53545c1"
-  integrity sha512-2L/kKvM5U4VOm+yVMvPIBF3yMZtQUyopf4YIT+KQbqZBZ8Fsdm7X6yeezy92PMyvvHQG1Pa322MVwxPojQvukA==
+"@rollup/plugin-typescript@^8.1.0":
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/@rollup/plugin-typescript/-/plugin-typescript-8.1.0.tgz#b7bbbbb4fd1324834f37844efd48b3844d912742"
+  integrity sha512-pyQlcGQYRsONUDwXK3ckGPHjPzmjlq4sinzr7emW8ZMb2oZjg9WLcdcP8wyHSvBjvHrLzMayyPy079RROqb4vw==
   dependencies:
     "@rollup/pluginutils" "^3.1.0"
     resolve "^1.17.0"
@@ -9776,10 +9776,10 @@ ripemd160@^2.0.0, ripemd160@^2.0.1:
     hash-base "^3.0.0"
     inherits "^2.0.1"
 
-rollup@^2.34.0:
-  version "2.34.0"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.34.0.tgz#ecc7f1d4ce2cb88bb51bec2f56b984f3c35b8271"
-  integrity sha512-dW5iLvttZzdVehjEuNJ1bWvuMEJjOWGmnuFS82WeKHTGXDkRHQeq/ExdifkSyJv9dLcR86ysKRmrIDyR6O0X8g==
+rollup@^2.35.1:
+  version "2.35.1"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.35.1.tgz#e6bc8d10893556a638066f89e8c97f422d03968c"
+  integrity sha512-q5KxEyWpprAIcainhVy6HfRttD9kutQpHbeqDTWnqAFNJotiojetK6uqmcydNMymBEtC4I8bCYR+J3mTMqeaUA==
   optionalDependencies:
     fsevents "~2.1.2"
 
