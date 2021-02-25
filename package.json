@@ -7,11 +7,11 @@
   "author": "[Tobias Lengsholz<tobias.lengsholz@invision.de>, Kai Brückers<kai.brueckers@invision.de>]",
   "license": "MIT",
   "resolutions": {
-    "@types/react": "^17.0.0",
+    "@types/react": "^17.0.2",
     "prismjs": "^1.21.0"
   },
   "dependencies": {
-    "@types/react": "^17.0.0",
+    "@types/react": "^17.0.2",
     "@types/styled-components": "5.1.7"
   },
   "devDependencies": {
