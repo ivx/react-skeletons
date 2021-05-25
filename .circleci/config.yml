@@ -3,6 +3,8 @@ defaults: &defaults
   working_directory: ~/skeletons
   docker:
     - image: circleci/node:current
+orbs:
+  jq: circleci/jq@2.2.0
 jobs:
   install:
     <<: *defaults
@@ -14,7 +16,7 @@ jobs:
             - yarn-{{ checksum "yarn.lock" }}
       - run:
           name: Install Dependencies
-          command: yarn install --frozen-lockfile
+          command: yarn install
       - save_cache:
           name: Save Yarn Package Cache
           key: yarn-{{ checksum "yarn.lock" }}
@@ -71,6 +73,8 @@ jobs:
   publish:
     <<: *defaults
     steps:
+      - jq/install:
+          override: true
       - add_ssh_keys:
           fingerprints:
             - 'ab:9b:b8:60:57:d9:b9:87:e5:d9:5d:6e:ee:88:76:32'
@@ -94,13 +98,21 @@ jobs:
                   npm publish --access public
                 else
                   echo "Commit was tagged with non-semver tag, push new version"
-                  yarn version --patch
+                  yarn version patch
+                  git add package.json
+                  git add .yarn/versions/*
+                  git commit -m 'Bump version'
+                  git tag v$(cat package.json| jq -r '.version')
                   git push origin master
                   git push --tags
               fi
             else
               echo "No tagged commit, push new version"
-              yarn version --patch
+              yarn version patch
+              git add package.json
+              git add .yarn/versions/*
+              git commit -m 'Bump version'
+              git tag v$(cat package.json| jq -r '.version')
               git push origin master
               git push --tags
             fi
