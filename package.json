@@ -51,8 +51,7 @@
     "lint": "prettier --check '**/*.{js,ts,tsx,json,md}' --single-quote --trailing-comma all",
     "format": "prettier --write '**/*.{js,ts,tsx,json,md}' --single-quote --trailing-comma all",
     "test": "yarn lint && yarn jest",
-    "storybook": "start-storybook -p 6006",
-    "deploy-storybook": "storybook-to-ghpages"
+    "storybook": "start-storybook -p 6006"
   },
   "publishConfig": {
     "access": "public"

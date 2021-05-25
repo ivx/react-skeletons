@@ -3,8 +3,6 @@ defaults: &defaults
   working_directory: ~/skeletons
   docker:
     - image: circleci/node:current
-orbs:
-  jq: circleci/jq@2.2.0
 jobs:
   install:
     <<: *defaults
@@ -56,9 +54,6 @@ jobs:
   storybook:
     <<: *defaults
     steps:
-      - add_ssh_keys:
-          fingerprints:
-            - 'ab:9b:b8:60:57:d9:b9:87:e5:d9:5d:6e:ee:88:76:32'
       - checkout
       - restore_cache:
           name: Restore Yarn Package Cache
@@ -67,55 +62,6 @@ jobs:
       - run:
           name: Build app
           command: yarn build-storybook
-      - run:
-          name: Deploy docs to gh-pages branch
-          command: yarn deploy-storybook --ci
-  publish:
-    <<: *defaults
-    steps:
-      - jq/install:
-          override: true
-      - add_ssh_keys:
-          fingerprints:
-            - 'ab:9b:b8:60:57:d9:b9:87:e5:d9:5d:6e:ee:88:76:32'
-      - checkout
-      - restore_cache:
-          name: Restore compiled package
-          keys:
-            - build-{{ .Revision }}
-      - run:
-          name: Authenticate with registry
-          command: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
-      - run:
-          name: Bump version
-          command: |
-            git config user.name $CIRCLE_USERNAME
-            if [ "$(git tag -l --points-at HEAD)" ]; then
-              TAG="$(git describe --exact-match)"
-              echo "$TAG"
-              if [[ "$TAG" =~ ^v[0-9]+.[0-9]+.[0-9]+$ ]]; then
-                  echo "Tagged commit, publishing"
-                  npm publish --access public
-                else
-                  echo "Commit was tagged with non-semver tag, push new version"
-                  yarn version patch
-                  git add package.json
-                  git add .yarn/versions/*
-                  git commit -m 'Bump version'
-                  git tag -a v$(cat package.json| jq -r '.version') -m v$(cat package.json| jq -r '.version')
-                  git push origin master
-                  git push --tags
-              fi
-            else
-              echo "No tagged commit, push new version"
-              yarn version patch
-              git add package.json
-              git add .yarn/versions/*
-              git commit -m 'Bump version'
-              git tag -a v$(cat package.json| jq -r '.version') -m v$(cat package.json| jq -r '.version')
-              git push origin master
-              git push --tags
-            fi
 workflows:
   version: 2
   build-deploy:
@@ -127,14 +73,6 @@ workflows:
       - build:
           requires:
             - install
-      - publish:
-          requires:
-            - test
-            - build
-          context: npm
-          filters:
-            branches:
-              only: master
       - storybook:
           requires:
             - install
