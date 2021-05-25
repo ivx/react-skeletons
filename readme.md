@@ -4,8 +4,6 @@
 
 # react-skeletons
 
-A storybook is deployed under https://ivx.github.io/react-skeletons/
-
 ### Summary
 
 react-skeletons consists of two components:
