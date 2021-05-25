@@ -102,7 +102,7 @@ jobs:
                   git add package.json
                   git add .yarn/versions/*
                   git commit -m 'Bump version'
-                  git tag v$(cat package.json| jq -r '.version')
+                  git tag -a v$(cat package.json| jq -r '.version') -m v$(cat package.json| jq -r '.version')
                   git push origin master
                   git push --tags
               fi
@@ -112,7 +112,7 @@ jobs:
               git add package.json
               git add .yarn/versions/*
               git commit -m 'Bump version'
-              git tag v$(cat package.json| jq -r '.version')
+              git tag -a v$(cat package.json| jq -r '.version') -m v$(cat package.json| jq -r '.version')
               git push origin master
               git push --tags
             fi
