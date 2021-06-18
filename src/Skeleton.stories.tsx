@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Skeleton } from './Skeleton';
+import { useSkeleton } from './useSkeleton';
+import { Story } from '@storybook/react';
 
 const AvatarSkeleton = styled(Skeleton)`
   display: inline-block;
@@ -46,3 +48,34 @@ export const Composition = () => (
 );
 
 export const Simple = () => <Skeleton width="200px" height="50px" />;
+
+const InnerTextWithSkeleton: React.FC = () => {
+  const { withSkeleton } = useSkeleton({
+    Skeleton: () => <Skeleton width="200px" height="1em" />,
+  });
+
+  return withSkeleton(<p>Loaded content</p>);
+};
+
+const PageWithNestedSkeleton: React.FC<{
+  isLoading?: boolean | ((prevIsLoading: boolean) => boolean);
+}> = ({ isLoading, children, ...rest }) => {
+  const { withSkeleton } = useSkeleton({
+    isLoading,
+    Skeleton: () => (
+      <div>
+        <p>Loading two elements with their own skeletons:</p>
+        <VSpacer />
+        <InnerTextWithSkeleton />
+        <VSpacer />
+        <InnerTextWithSkeleton />
+      </div>
+    ),
+  });
+
+  return withSkeleton(<div {...rest}>{children}</div>);
+};
+
+export const NestedSkeleton: Story = () => (
+  <PageWithNestedSkeleton isLoading>Loaded.</PageWithNestedSkeleton>
+);

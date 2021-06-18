@@ -37,10 +37,34 @@ const TextWithoutSkeleton: React.FC<{ isLoading?: boolean }> = ({
   );
 };
 
+const InnerTextWithSkeleton: React.FC = ({ children, ...rest }) => {
+  const { withSkeleton } = useSkeleton({
+    Skeleton: () => (
+      <div>
+        <p>Loading...</p>
+        {children}
+      </div>
+    ),
+  });
+
+  return withSkeleton(<p {...rest}>Loaded content</p>);
+};
+
 const ExamplePage: React.FC<{
   isLoading?: boolean | ((prevIsLoading: boolean) => boolean);
 }> = ({ isLoading, children, ...rest }) => {
   const { withSkeleton } = useSkeleton({ isLoading });
+
+  return withSkeleton(<div {...rest}>{children}</div>);
+};
+
+const PageWithNestedSkeleton: React.FC<{
+  isLoading?: boolean | ((prevIsLoading: boolean) => boolean);
+}> = ({ isLoading, children, ...rest }) => {
+  const { withSkeleton } = useSkeleton({
+    isLoading,
+    Skeleton: () => <InnerTextWithSkeleton />,
+  });
 
   return withSkeleton(<div {...rest}>{children}</div>);
 };
@@ -194,5 +218,15 @@ describe('useSkeleton', () => {
     );
 
     expect(getByText('Skeleton context value: false')).toBeInTheDocument();
+  });
+
+  it('forwards the right loading state to nested components with skeletons', () => {
+    const { getByText, queryByText } = render(
+      <PageWithNestedSkeleton isLoading>Content</PageWithNestedSkeleton>,
+    );
+
+    expect(queryByText('Content')).not.toBeInTheDocument();
+    expect(queryByText('Loaded content')).not.toBeInTheDocument();
+    expect(getByText('Loading...')).toBeInTheDocument();
   });
 });
