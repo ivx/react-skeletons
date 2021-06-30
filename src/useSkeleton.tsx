@@ -35,17 +35,18 @@ export const useSkeleton = ({
   );
 
   const withSkeleton = React.useMemo(
-    () => (tree: React.ReactNode) => (
-      <>
-        {isCurrentSkeleton === undefined ? (
-          renderContent(tree)
-        ) : (
-          <SkeletonContext.Provider value={isSkeleton}>
-            {renderContent(tree)}
-          </SkeletonContext.Provider>
-        )}
-      </>
-    ),
+    () => (tree: React.ReactNode) =>
+      (
+        <>
+          {isCurrentSkeleton === undefined ? (
+            renderContent(tree)
+          ) : (
+            <SkeletonContext.Provider value={isSkeleton}>
+              {renderContent(tree)}
+            </SkeletonContext.Provider>
+          )}
+        </>
+      ),
     [isCurrentSkeleton, isSkeleton, renderContent],
   );
 

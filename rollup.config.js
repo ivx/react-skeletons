@@ -7,4 +7,5 @@ export default {
     format: 'cjs',
   },
   plugins: [typescript()],
+  external: ['react', 'styled-components'],
 };
